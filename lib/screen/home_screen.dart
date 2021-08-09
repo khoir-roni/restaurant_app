@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'dart:async';
 
-
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,7 +18,9 @@ class _HomeScreenState extends State<HomeScreen> {
     String jsonString = await loadRestaurantFromAssets();
     final jsonResponse = json.decode(jsonString);
     ListRestaurant listrestaurants = ListRestaurant.fromJson(jsonResponse);
-    print('Name: ${listrestaurants.restaurants}');
+    print('Name: ${listrestaurants}');
+
+    return listrestaurants.restaurants;
   }
 
   @override
@@ -28,9 +29,26 @@ class _HomeScreenState extends State<HomeScreen> {
     loadPerson();
   }
 
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      child: null,
-    );
+    return Center(
+        child: FutureBuilder(
+      future: loadPerson(),
+      builder: (context, snapshot) {
+        final data = snapshot.data;
+        return Container(
+          child: Column(
+            children: [
+              Text(
+                'data ${data}',
+                style: TextStyle(
+                  fontSize: 15.0,
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    ));
   }
 }
