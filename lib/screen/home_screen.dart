@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/model/restaurant_model.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' ;
 import 'dart:convert';
 import 'dart:async';
 
@@ -14,13 +14,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return await rootBundle.loadString('local_restaurant.json');
   }
 
+  List drinks = [];
   Future loadPerson() async {
     String jsonString = await loadRestaurantFromAssets();
     final jsonResponse = json.decode(jsonString);
+    // print('jsonResponse: ${jsonResponse}');
+    //print('restaurants: ${jsonResponse['restaurants']['id']}');
     ListRestaurant listrestaurants = ListRestaurant.fromJson(jsonResponse);
-    print('Name: ${listrestaurants}');
+    // print('Name: ${listrestaurants.restaurants[1].menus.drinks[1].name}');
+    //print(listrestaurants.restaurants.toString());
 
-    return listrestaurants.restaurants;
+    setState(() {
+      drinks = listrestaurants.restaurants[1].menus.drinks;
+    });
+    print(drinks);
   }
 
   @override
@@ -31,24 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: FutureBuilder(
-      future: loadPerson(),
-      builder: (context, snapshot) {
-        final data = snapshot.data;
-        return Container(
-          child: Column(
-            children: [
-              Text(
-                'data ${data}',
-                style: TextStyle(
-                  fontSize: 15.0,
-                ),
-              )
-            ],
-          ),
-        );
-      },
-    ));
+    return Container(
+      child: null,
+    );
   }
 }
