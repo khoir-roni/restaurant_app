@@ -1,28 +1,24 @@
 // To parse this JSON data, do
 //
-// final listRestaurant = listRestaurantFromJson(jsonString);
+//     final restaurant = restaurantFromJson(jsonString);
 
 import 'dart:convert';
 
-/*List<ListRestaurant> parseArticles(String? json) {
-  if (json == null) {
-    return [];
-  }
-  final List pasred = jsonDecode(json);
-  return pasred.map((json) => ListRestaurant.fromJson(json)).toList();
-}
-*/
-class ListRestaurant {
-  ListRestaurant({
+Restaurant restaurantFromJson(String str) =>
+    Restaurant.fromJson(json.decode(str));
+
+String restaurantToJson(Restaurant data) => json.encode(data.toJson());
+
+class Restaurant {
+  Restaurant({
     required this.restaurants,
   });
 
-  List<Restaurant> restaurants;
+  List<RestaurantElement> restaurants;
 
-  
-  factory ListRestaurant.fromJson(Map<String, dynamic> json) => ListRestaurant(
-        restaurants: List<Restaurant>.from(
-            json["restaurants"].map((x) => Restaurant.fromJson(x))),
+  factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
+        restaurants: List<RestaurantElement>.from(
+            json["restaurants"].map((x) => RestaurantElement.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -30,15 +26,15 @@ class ListRestaurant {
       };
 }
 
-class Restaurant {
-  Restaurant({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.pictureId,
-    required this.city,
-    required this.rating,
-    required this.menus,
+class RestaurantElement {
+  RestaurantElement({
+   required this.id,
+  required this.name,
+   required this.description,
+   required this.pictureId,
+   required this.city,
+   required this.rating,
+   required this.menus,
   });
 
   String id;
@@ -49,8 +45,8 @@ class Restaurant {
   double rating;
   Menus menus;
 
-
-  factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
+  factory RestaurantElement.fromJson(Map<String, dynamic> json) =>
+      RestaurantElement(
         id: json["id"],
         name: json["name"],
         description: json["description"],
@@ -73,8 +69,8 @@ class Restaurant {
 
 class Menus {
   Menus({
-    required this.foods,
-    required this.drinks,
+   required this.foods,
+   required this.drinks,
   });
 
   List<Drink> foods;
@@ -93,12 +89,10 @@ class Menus {
 
 class Drink {
   Drink({
-    required this.name,
+   required this.name,
   });
 
   String name;
-
-
 
   factory Drink.fromJson(Map<String, dynamic> json) => Drink(
         name: json["name"],

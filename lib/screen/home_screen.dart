@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/model/restaurant_model.dart';
-import 'package:flutter/services.dart' ;
+import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'dart:async';
 
@@ -9,37 +9,44 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+
 class _HomeScreenState extends State<HomeScreen> {
-  Future<String> loadRestaurantFromAssets() async {
-    return await rootBundle.loadString('local_restaurant.json');
-  }
-
-  List drinks = [];
-  Future loadPerson() async {
-    String jsonString = await loadRestaurantFromAssets();
-    final jsonResponse = json.decode(jsonString);
-    // print('jsonResponse: ${jsonResponse}');
-    //print('restaurants: ${jsonResponse['restaurants']['id']}');
-    ListRestaurant listrestaurants = ListRestaurant.fromJson(jsonResponse);
-    // print('Name: ${listrestaurants.restaurants[1].menus.drinks[1].name}');
-    //print(listrestaurants.restaurants.toString());
-
-    setState(() {
-      drinks = listrestaurants.restaurants[1].menus.drinks;
-    });
-    print(drinks);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    loadPerson();
+  Widget _buildCard(BuildContext context, RestaurantElement article) {
+    return ListTile(
+      onTap: () {
+              },
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8.0,
+      ),
+      leading: Image.network(
+        article.pictureId,
+        width: 100.0,
+      ),
+      title: Text(article.name),
+      subtitle: Text(article.city),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: null,
+    return Scaffold(
+      body: FutureBuilder(
+        future:
+            DefaultAssetBundle.of(context).loadString('local_restaurant.json'),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+           final restaurant = restaurantFromJson(snapshot.data);
+
+          final restaurantElement = restaurant.restaurants;
+
+          return ListView.builder(
+            itemCount: restaurantElement.length,
+            itemBuilder: (context, index) {
+              return _buildCard(context, restaurantElement[index]);
+            },
+          );
+        },
+      ),
     );
   }
 }

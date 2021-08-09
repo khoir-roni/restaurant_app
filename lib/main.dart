@@ -16,7 +16,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      initialRoute: '/',
+      routes:{
+         '/': (context) => HomeScreen(),
+      }
+
+
       
     );
   }
