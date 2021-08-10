@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/model/restaurant_model.dart';
+import 'package:restaurant_app/screen/detail_screen.dart';
 import 'package:restaurant_app/screen/home_screen.dart';
 
 void main() {
@@ -13,12 +15,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'News App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: '/',
+      initialRoute: HomeScreen.routeName,
       routes:{
-         '/': (context) => HomeScreen(),
+         HomeScreen.routeName: (context) => HomeScreen(),
+         DetailScreen.routeName: (context) => DetailScreen(
+                restaurantElement: ModalRoute.of(context)?.settings.arguments as RestaurantElement,
+              ),
+
       }
 
 
