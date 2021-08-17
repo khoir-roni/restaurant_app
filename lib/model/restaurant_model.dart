@@ -28,13 +28,13 @@ class Restaurant {
 
 class RestaurantElement {
   RestaurantElement({
-   required this.id,
-  required this.name,
-   required this.description,
-   required this.pictureId,
-   required this.city,
-   required this.rating,
-   required this.menus,
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.pictureId,
+    required this.city,
+    required this.rating,
+    required this.menus,
   });
 
   String id;
@@ -69,8 +69,8 @@ class RestaurantElement {
 
 class Menus {
   Menus({
-   required this.foods,
-   required this.drinks,
+    required this.foods,
+    required this.drinks,
   });
 
   List<Drink> foods;
@@ -89,7 +89,7 @@ class Menus {
 
 class Drink {
   Drink({
-   required this.name,
+    required this.name,
   });
 
   String name;
